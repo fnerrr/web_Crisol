@@ -1,0 +1,56 @@
+extends ./layout/inicio_html
+
+block contenido
+    div(class="m-4 sm:m-10 mx-auto max-w-xs sm:max-w-full")
+        div(class="bg-white rounded-lg shadow-lg p-8 text-center")
+            h2(class="text-2xl font-title text-black mb-4") Noticias
+
+            //- Verificar si hay noticias
+            if noticias.length === 0
+                //- Mensaje cuando no hay noticias
+                p(class="text-gray-600 text-lg") No hay noticias disponibles en este momento.
+            else
+                //- Contenedor de las cards (solo se muestra si hay noticias)
+                div(class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6")
+                    each noticia in noticias
+                        a(
+                            href=noticia.url,
+                            target="_blank",
+                            class="block bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-gray-50"
+                        )
+                            img(
+                                src=noticia.img,
+                                alt=noticia.Titulo,
+                                class="w-full h-48 object-cover"
+                            )
+                            div(class="p-4")
+                                h4(
+                                    class="text-lg font-bold text-gray-800 hover:text-crisol transition-colors duration-300"
+                                ) #{noticia.Titulo}
+
+
+
+//- block contenido
+//-     div(class="container mx-auto px-4")
+//-         h1(class="text-2xl font-bold my-4") Lista de Noticias
+
+//-         table(class="min-w-full bg-white border border-gray-300")
+//-             thead
+//-                 tr
+//-                     th(class="py-2 px-4 border-b") Título
+//-                     th(class="py-2 px-4 border-b") URL
+//-                     th(class="py-2 px-4 border-b") Imagen
+//-                     th(class="py-2 px-4 border-b") Acciones
+//-             tbody
+//-                 each noticia in noticias
+//-                     tr
+//-                         td(class="py-2 px-4 border-b")= noticia.Titulo
+//-                         td(class="py-2 px-4 border-b")= noticia.url
+//-                         td(class="py-2 px-4 border-b")
+//-                             img(src=noticia.img, alt=noticia.Titulo, class="w-16 h-16 object-cover")
+//-                         td(class="py-2 px-4 border-b")
+//-                             a(href=`/noticias/editar/${noticia.id}`, class="text-blue-500 hover:text-blue-700 mr-2") Editar
+//-                             form(action=`/noticias/eliminar/${noticia.id}`, method="POST", class="inline")
+//-                                 button(type="submit", class="text-red-500 hover:text-red-700") Eliminar
+
+//-         a(href="/registro-noticias", class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700") Crear Nueva Noticia

@@ -1,0 +1,31 @@
+extends ../layout/administrador
+
+block contenido
+    div(class="container mx-auto px-4 py-8")
+        h1(class="text-2xl font-bold mb-6") Nuevo Slide
+
+        form(action="/admin/slider" method="POST" enctype="multipart/form-data" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md")
+            div(class="mb-4")
+                label(for="imagen" class="block text-gray-700 font-medium mb-2") Imagen del Slide
+                input(type="file" name="imagen" id="imagen" accept="image/*" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+                p(class="mt-1 text-sm text-gray-500") Seleccione una imagen para el slide (recomendado: 1200x600 px)
+
+            div(class="mb-4")
+                label(for="revista_id" class="block text-gray-700 font-medium mb-2") Revista Asociada
+                select(name="revista_id" id="revista_id" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+                    option(value="" selected disabled) Seleccione una revista
+                    each revista in revistas
+                        option(value=revista.id)= revista.titulo
+
+            div(class="mb-4")
+                label(for="orden" class="block text-gray-700 font-medium mb-2") Orden de Visualización
+                input(type="number" name="orden" id="orden" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+
+            div(class="mb-6")
+                label(class="flex items-center space-x-3")
+                    input(type="checkbox" name="activo" id="activo" checked class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500")
+                    span(class="text-gray-700") Activo
+
+            div(class="flex justify-end space-x-4")
+                a(href="/admin/sliders" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500") Cancelar
+                button(type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2") Guardar Slide

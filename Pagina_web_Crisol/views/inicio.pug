@@ -1,0 +1,101 @@
+extends ./layout/inicio_html
+
+block contenido
+    div(class="w-full flex justify-center bg-stone-50 rounded-t-xl min-h-screen")
+        div(class="m-2 sm:m-6 max-w-lg sm:max-w-6xl w-full")
+            div(class="flex flex-col items-center mb-6 sm:mb-8")
+                div(class="flex items-center gap-3")
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-700" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                    </svg>
+                    h1(class="text-3xl sm:text-4xl font-bold text-center text-gray-800") Ediciones Crisol
+
+            if revistas && revistas.length > 0
+                //- Revista destacada (centrada)
+                div(class="flex justify-center mb-6 sm:mb-8")
+                    div(class="w-full sm:w-96") 
+                        div(class="bg-white rounded-xl shadow-md overflow-hidden border border-indigo-200 hover:shadow-lg transition duration-300 group relative")
+                            //- Ribbon para destacada
+                            div(class="absolute -right-2 -top-2 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded z-10") Destacada
+                            
+                            div(class="relative overflow-hidden h-48")
+                                img(src=revistas[0].imagen || "/img/default.jpg" alt=revistas[0].titulo class="w-full h-full object-cover transition duration-500 group-hover:scale-105")
+                                div(class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4")
+                                    div(class="translate-y-4 group-hover:translate-y-0 transition duration-300")
+                                        h3(class="text-white font-bold text-base")= revistas[0].titulo
+                                        p(class="text-gray-200 text-sm") Edición mas reciente
+                            
+                            div(class="p-4")
+                                div(class="flex justify-between items-start mb-2")
+                                    div
+                                        h3(class="text-gray-900 font-bold text-base")= revistas[0].titulo
+                                
+                                p(class="text-sm text-gray-600 mb-3 line-clamp-2")= revistas[0].descripcion || "Descripción no disponible"
+                                
+                                div(class="flex justify-between border-t border-gray-100 pt-3 text-sm")
+                                    a(href=`/revista/${revistas[0].id}` class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1")
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                        | Vista previa
+                                    a(href=revistas[0].url class="text-gray-700 hover:text-gray-900 font-medium flex items-center gap-1")
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                        | PDF (#{formatFileSize(revistas[0].tamanio)})
+
+                //- Resto de revistas
+                div(class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6")
+                    each revista, index in revistas.slice(1)
+                        div(class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition duration-300 group")
+                            div(class="relative overflow-hidden h-40 sm:h-48")
+                                img(src=revista.imagen || "/img/default.jpg" alt=revista.titulo class="w-full h-full object-cover transition duration-500 group-hover:scale-105")
+                                div(class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-3 sm:p-4")
+                                    div(class="translate-y-4 group-hover:translate-y-0 transition duration-300")
+                                        h3(class="text-white font-bold text-sm sm:text-base")= revista.titulo
+                                        p(class="text-gray-200 text-xs sm:text-sm") Crisol
+                            
+                            div(class="p-3 sm:p-4")
+                                div(class="flex justify-between items-start mb-1 sm:mb-2")
+                                    div
+                                        h3(class="text-gray-900 font-bold text-sm sm:text-base")= revista.titulo
+                                    span(class=`text-xs px-2 py-1 rounded-full ${index > 0 ? 'bg-green-100 text-green-800' : 'bg-indigo-100 text-indigo-800'}`)= index > 0 ? 'Nuevo' : 'Popular'
+                                
+                                p(class="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 line-clamp-2")= revista.descripcion 
+                                
+                                div(class="flex justify-between border-t border-gray-100 pt-2 sm:pt-3 text-xs sm:text-sm")
+                                    a(href=`/revista/${revista.id}` class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1")
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                        | Vista previa
+                                    a(href=revista.url class="text-gray-700 hover:text-gray-900 font-medium flex items-center gap-1")
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                        | PDF (#{formatFileSize(revista.tamanio)})
+
+                //- Botón Ver Más
+                div(class="flex justify-center mt-8 mb-12")
+                    a(href="/revistas" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300")
+                        | Ver todas las ediciones
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                                        
+
+    div(class="flex justify-center items-center p-10 bg-gray-100")
+        div(class="space-y-8 w-full max-w-4xl")
+            // Tarjeta orientada a la izquierda (imagen a la izquierda, texto a la derecha)
+            div(class="flex flex-col md:flex-row items-center bg-white shadow-xl rounded-2xl overflow-hidden")
+                img(src="/img/carruesl1.jpg" alt="Imagen 1" class="w-full md:w-1/2 h-64 object-cover")
+                div(class="p-8 w-full md:w-1/2")
+                    h2(class="font-title text-2xl font-semibold mb-4") Artículo 1: Innovación en la Educación
+                    p(class="font-title text-lg text-gray-700")
+                        | Descripción: Explora cómo la tecnología está transformando la educación, con herramientas interactivas y metodologías modernas que facilitan el aprendizaje. Un vistazo al futuro de las aulas y la enseñanza personalizada.
+
+            div(class="flex flex-col md:flex-row-reverse items-center bg-white shadow-xl rounded-2xl overflow-hidden")
+                img(src="/img/carruesl1.jpg" alt="Imagen 2" class="w-full md:w-1/2 h-64 object-cover")
+                div(class="p-8 w-full md:w-1/2")
+                    h2(class="font-title text-2xl font-semibold mb-4") Artículo 2: Liderazgo Juvenil en la Política
+                    p(class="font-title text-lg text-gray-700")
+                        | Descripción: Descubre historias de jóvenes líderes que están marcando la diferencia en sus comunidades. Desde debates políticos hasta iniciativas de cambio social, estas voces inspiran una nueva era.
+
+            div(class="flex flex-col md:flex-row items-center bg-white shadow-xl rounded-2xl overflow-hidden")
+                img(src="/img/carruesl1.jpg" alt="Imagen 3" class="w-full md:w-1/2 h-64 object-cover")
+                div(class="p-8 w-full md:w-1/2")
+                    h2(class="font-title text-2xl font-semibold mb-4") Artículo 3: El Arte como Expresión Urbana
+                    p(class="font-title text-lg text-gray-700")
+                        | Descripción: Un recorrido por cómo los murales y el arte callejero están revitalizando espacios urbanos, conectando a las personas con mensajes visuales llenos de creatividad y emoción.

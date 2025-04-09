@@ -1,0 +1,37 @@
+extends ./layout/inicio_html
+
+block contenido
+    div(class="w-full flex justify-center")
+        div(class="m-4 sm:m-10 max-w-lg sm:max-w-3xl w-full")
+            div(class="bg-white rounded-xl shadow-xl p-8 text-center")
+                h2(class="text-3xl font-bold text-gray-800 mb-6") ¿Qué es La Crisol?
+                div(class="text-gray-700 space-y-4 text-justify")
+                    p 
+                        strong CRISOL 
+                        | es una revista bimestral de la Federación Nacional de Estudiantes "Rafael Ramírez" (FNERRR), publicada desde abril de 2011.
+                    p 
+                        | Es una voz destacada de la izquierda que ofrece un punto de vista sobre política, economía, cultura, ciencia y, sobre todo, educación. 
+                        | Está compuesta por artículos principales, secciones fijas y secciones variables con fotografías e ilustraciones.
+                    p 
+                        strong Objetivo: 
+                        | Presentar en forma atractiva y amena temas políticos y sociales de interés permanente y de actualidad.
+
+                // Sección con la fila de imágenes
+                div(class="mt-8 grid grid-cols-1 sm:grid-cols-5 gap-6 justify-center items-center")
+                    each i in [1, 2, 3, 4, 5]
+                        img(src=`/img/carruesl${i}.jpg` alt=`Imagen ${i}` class="w-36 h-36 sm:w-40 sm:h-40 object-cover rounded-full shadow-lg mx-auto")
+
+                // Separación más grande entre secciones
+                div(class="mt-16") 
+                    h2(class="text-3xl font-bold text-gray-800 mb-6") ¿Qué es La FNERRR?
+                    div(class="text-gray-700 space-y-4 text-justify")
+                        p 
+                            strong La Federación Nacional de Estudiantes "Rafael Ramírez" (FNERRR)  
+                            | es una organización estudiantil que desde 1999 agrupa a miles de jóvenes comprometidos con el pueblo mexicano. 
+                        p 
+                            | Tiene como objetivo principal luchar por una educación de calidad para todos. Por esta razón, impulsa 
+                            | la formación integral a través de actividades de lucha, académicas, culturales, deportivas y económicas.
+                            
+                div(class="mt-8 grid grid-cols-1 sm:grid-cols-5 gap-6 justify-center items-center")
+                    each i in [1, 2, 3, 4, 5]
+                        img(src=`/img/carruesl${i}.jpg` alt=`Imagen ${i}` class="w-36 h-36 sm:w-40 sm:h-40 object-cover rounded-full shadow-lg mx-auto")

@@ -1,0 +1,56 @@
+.slider.relative.overflow-hidden.shadow-lg
+    .slider-track.flex.transition-transform.duration-500
+        each image in images
+            .slider-item.flex-shrink-0.w-full
+                img(src=image, alt="Slider Image" class="w-full h-auto object-cover rounded-lg shadow-md")
+    .slider-controls.absolute.inset-0.flex.items-center.justify-between.px-4.pointer-events-none
+        button.prev.bg-white.p-2.rounded-full.shadow-lg.pointer-events-auto(class="hover:bg-gray-200") &larr;
+        button.next.bg-white.p-2.rounded-full.shadow-lg.pointer-events-auto(class="hover:bg-gray-200") &rarr;
+
+style.
+    /* Estilos base del slider */
+    .slider {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .slider-track {
+        width: 100%;
+    }
+
+    .slider-item {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    /* Ajustes para pantallas más grandes */
+    @media (min-width: 640px) {
+        .slider {
+            max-width: 640px; /* Ajusta según necesites */
+        }
+    }
+
+    @media (min-width: 768px) {
+        .slider {
+            max-width: 768px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .slider {
+            max-width: 1024px;
+        }
+    }
+
+    /* Opcional: efecto de gradiente para pantallas grandes */
+    @media (min-width: 640px) {
+        .slider::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            pointer-events: none;
+        }
+    }
